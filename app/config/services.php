@@ -26,3 +26,12 @@ $dsn = 'sqlite:' . $config['database']['file_path'];
 
 // Redis? This is where you'd set that up
 // $app->register('redis', Redis::class, [ $config['redis']['host'], $config['redis']['port'] ]);
+
+$Latte = new \Latte\Engine;
+$Latte->setTempDirectory(__DIR__ . '/../cache/');
+// This is fun feature of Flight. You can remap some built in functions with the framework
+// to your liking. In this case, we're remapping the Flight::render() method.
+$app->map('render', function(string $templatePath, array $data = [], ?string $block = null) use ($app, $Latte) {
+    $templatePath = __DIR__ . '/../views/'. $templatePath;
+    $Latte->render($templatePath, $data, $block);
+});
