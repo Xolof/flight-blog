@@ -6,21 +6,9 @@ namespace app\controllers;
 
 use app\records\CommentRecord;
 use app\records\PostRecord;
-use flight\Engine;
 
-class PostController
+class PostController extends BaseController
 {
-    /** @var Engine */
-    protected Engine $app;
-
-    /**
-     * Constructor
-     */
-    public function __construct(Engine $app)
-    {
-        $this->app = $app;
-    }
-
     /**
      * Index
      *
@@ -28,14 +16,14 @@ class PostController
      */
     public function index(): void
     {
-        $PostRecord = new PostRecord($this->app->db());
+        $PostRecord = new PostRecord($this->db());
         $posts = $PostRecord->order('id DESC')->findAll();
-        $CommentRecord = new CommentRecord($this->app->db());
+        $CommentRecord = new CommentRecord($this->db());
         foreach($posts as &$post) {
             $post->comments = $CommentRecord->eq('post_id', $post->id)->findAll();
         }
 
-        $this->app->render('posts/index.latte', [ 'page_title' => 'Blog', 'posts' => $posts]);
+        $this->render('posts/index.latte', [ 'page_title' => 'Blog', 'posts' => $posts]);
     }
 
     /**
@@ -45,7 +33,7 @@ class PostController
      */
     public function create(): void
     {
-        $this->app->render('posts/create.latte', [ 'page_title' => 'Create Post']);
+        $this->render('posts/create.latte', [ 'page_title' => 'Create Post']);
     }
 
     /**
@@ -55,15 +43,15 @@ class PostController
      */
     public function store(): void
     {
-        $postData = $this->app->request()->data;
-        $PostRecord = new PostRecord($this->app->db());
+        $postData = $this->request()->data;
+        $PostRecord = new PostRecord($this->db());
         $PostRecord->title = $postData->title;
         $PostRecord->content = $postData->content;
         $PostRecord->username = $postData->username;
         $PostRecord->created_at = gmdate('Y-m-d H:i:s');
         $PostRecord->updated_at = null;
         $PostRecord->save();
-        $this->app->redirect('/blog');
+        $this->redirect('/blog');
     }
 
     /**
@@ -74,11 +62,11 @@ class PostController
      */
     public function show(int $id): void
     {
-        $PostRecord = new PostRecord($this->app->db());
+        $PostRecord = new PostRecord($this->db());
         $post = $PostRecord->find($id);
-        $CommentRecord = new CommentRecord($this->app->db());
+        $CommentRecord = new CommentRecord($this->db());
         $post->comments = $CommentRecord->eq('post_id', $post->id)->findAll();
-        $this->app->render('posts/show.latte', [ 'page_title' => $post->title, 'post' => $post]);
+        $this->render('posts/show.latte', [ 'page_title' => $post->title, 'post' => $post]);
     }
 
     /**
@@ -89,9 +77,9 @@ class PostController
      */
     public function edit(int $id): void
     {
-        $PostRecord = new PostRecord($this->app->db());
+        $PostRecord = new PostRecord($this->db());
         $post = $PostRecord->find($id);
-        $this->app->render('posts/edit.latte', [ 'page_title' => 'Update Post', 'post' => $post]);
+        $this->render('posts/edit.latte', [ 'page_title' => 'Update Post', 'post' => $post]);
     }
 
     /**
@@ -102,11 +90,11 @@ class PostController
      */
     public function update(int $id): void
     {
-        $postData = $this->app->request()->data;
-        $PostRecord = new PostRecord($this->app->db());
+        $postData = $this->request()->data;
+        $PostRecord = new PostRecord($this->db());
         $post = $PostRecord->find($id);
         if (count($post->getData()) === 0) {
-          $this->app->redirect('/blog');
+          $this->redirect('/blog');
           return;
         };
         $PostRecord->title = $postData->title;
@@ -114,7 +102,7 @@ class PostController
         $PostRecord->username = $postData->username;
         $PostRecord->updated_at = gmdate('Y-m-d H:i:s');
         $PostRecord->save();
-        $this->app->redirect('/blog');
+        $this->redirect('/blog');
     }
 
     /**
@@ -125,10 +113,10 @@ class PostController
      */
     public function destroy(int $id): void
     {
-        $PostRecord = new PostRecord($this->app->db());
+        $PostRecord = new PostRecord($this->db());
         $post = $PostRecord->find($id);
         $post->delete();
-        $this->app->redirect('/blog');
+        $this->redirect('/blog');
     }
 }
 

@@ -5,21 +5,9 @@ declare(strict_types=1);
 namespace app\controllers;
 
 use app\records\CommentRecord;
-use flight\Engine;
 
-class CommentController
+class CommentController extends BaseController
 {
-    /** @var Engine */
-    protected Engine $app;
-
-    /**
-     * Constructor
-     */
-    public function __construct(Engine $app)
-    {
-        $this->app = $app;
-    }
-
     /**
      * Store
      * 
@@ -37,7 +25,7 @@ class CommentController
         $CommentRecord->created_at = gmdate('Y-m-d H:i:s');
         $CommentRecord->updated_at = null;
         $CommentRecord->save();
-        $this->app->redirect('/blog/' . $id);
+        $this->redirect('/blog/' . $id);
     }
 
     /**
@@ -53,7 +41,7 @@ class CommentController
         $CommentRecord = new CommentRecord($this->app->db());
         $CommentRecord->find($comment_id);
         $CommentRecord->delete();
-        $this->app->redirect('/blog/' . $id);
+        $this->redirect('/blog/' . $id);
     }
 
 }

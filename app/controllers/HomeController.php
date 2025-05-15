@@ -4,21 +4,8 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
-use flight\Engine;
-
-class HomeController
+class HomeController extends BaseController
 {
-    /** @var Engine */
-    protected Engine $app;
-
-    /**
-     * Constructor
-     */
-    public function __construct(Engine $app)
-    {
-        $this->app = $app;
-    }
-
     /**
      * Index
      *
@@ -26,7 +13,7 @@ class HomeController
      */
     public function index(): void
     {
-        $this->app->render('home.latte', [
+        $this->render('home.latte', [
             'page_title' => 'Home',
         ]);
     }
