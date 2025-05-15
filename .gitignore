@@ -6,4 +6,5 @@ composer.lock
 runway
 app/database.sqlite
 app/cache
+app/log/*
 
