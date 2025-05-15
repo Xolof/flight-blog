@@ -104,7 +104,11 @@ class PostController
     {
         $postData = $this->app->request()->data;
         $PostRecord = new PostRecord($this->app->db());
-        $PostRecord->find($id);
+        $post = $PostRecord->find($id);
+        if (count($post->getData()) === 0) {
+          $this->app->redirect('/blog');
+          return;
+        };
         $PostRecord->title = $postData->title;
         $PostRecord->content = $postData->content;
         $PostRecord->username = $postData->username;
