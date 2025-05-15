@@ -21,7 +21,13 @@ class PostRecord extends \flight\ActiveRecord
      * @var array $relations Set the relationships for the model
      *   https://docs.flightphp.com/awesome-plugins/active-record#relationships
      */
-    protected array $relations = [];
+    protected array $relations = [
+        'post' => [
+            self::HAS_MANY,
+            CommentRecord::class,
+            'post_id'
+        ]
+    ];
 
     /**
      * Constructor
