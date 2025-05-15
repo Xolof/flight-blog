@@ -8,9 +8,7 @@ use flight\net\Router;
  * @var Router $router 
  * @var Engine $app
  */
-$router->get('/', function() use ($app) {
-	$app->render('home.latte', [ 'page_title' => 'Flight PHP Blog' ]);
-});
+$router->get('/', \app\controllers\HomeController::class . '->index');
 
 $router->get('/hello-world/@name', function($name) {
 	echo '<h1>Hello world! Oh hey '.$name.'!</h1>';
