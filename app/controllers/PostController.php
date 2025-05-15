@@ -51,7 +51,8 @@ class PostController extends BaseController
         $PostRecord->created_at = gmdate('Y-m-d H:i:s');
         $PostRecord->updated_at = null;
         $PostRecord->save();
-        $this->redirect('/blog');
+        $url = $this->app->getUrl('blog');
+        $this->app->redirect($url);
     }
 
     /**
@@ -90,11 +91,14 @@ class PostController extends BaseController
      */
     public function update(int $id): void
     {
+        $url = $this->app->getUrl('blog');
+   
         $postData = $this->request()->data;
+        $url = $this->app->getUrl('blog');
         $PostRecord = new PostRecord($this->db());
         $post = $PostRecord->find($id);
         if (count($post->getData()) === 0) {
-          $this->redirect('/blog');
+          $this->app->redirect($url);
           return;
         };
         $PostRecord->title = $postData->title;
@@ -102,7 +106,7 @@ class PostController extends BaseController
         $PostRecord->username = $postData->username;
         $PostRecord->updated_at = gmdate('Y-m-d H:i:s');
         $PostRecord->save();
-        $this->redirect('/blog');
+        $this->app->redirect($url);
     }
 
     /**
@@ -116,7 +120,8 @@ class PostController extends BaseController
         $PostRecord = new PostRecord($this->db());
         $post = $PostRecord->find($id);
         $post->delete();
-        $this->redirect('/blog');
+        $url = $this->app->getUrl('blog');
+        $this->app->redirect($url);
     }
 }
 

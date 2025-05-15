@@ -29,6 +29,11 @@ $app->register('db', $pdoClass, [ $dsn, $config['database']['user'] ?? null, $co
 
 $Latte = new \Latte\Engine;
 $Latte->setTempDirectory(__DIR__ . '/../cache/');
+// This adds a new function in our Latte template files
+// that allows us to generate a URL from an alias.
+$Latte->addFunction('route', function(string $alias, array $params = []) use ($app) {
+    return $app->getUrl($alias, $params);
+});
 // This is fun feature of Flight. You can remap some built in functions with the framework
 // to your liking. In this case, we're remapping the Flight::render() method.
 $app->map('render', function(string $templatePath, array $data = [], ?string $block = null) use ($app, $Latte) {

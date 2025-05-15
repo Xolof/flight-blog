@@ -8,7 +8,7 @@ use flight\net\Router;
  * @var Router $router 
  * @var Engine $app
  */
-$router->get('/', \app\controllers\HomeController::class . '->index');
+$router->get('/', \app\controllers\HomeController::class . '->index')->setAlias('home');
 
 $router->get('/hello-world/@name', function($name) {
 	echo '<h1>Hello world! Oh hey '.$name.'!</h1>';
@@ -24,7 +24,7 @@ $router->group('/api', function() use ($router, $app) {
 // Blog
 $router->group('/blog', function(Router $router) {
     // Posts
-    $router->get('', \app\controllers\PostController::class . '->index');
+    $router->get('', \app\controllers\PostController::class . '->index')->setAlias('blog');
     $router->get('/create', \app\controllers\PostController::class . '->create');
     $router->post('', \app\controllers\PostController::class . '->store');
     $router->get('/@id', \app\controllers\PostController::class . '->show');

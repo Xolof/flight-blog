@@ -25,7 +25,9 @@ class CommentController extends BaseController
         $CommentRecord->created_at = gmdate('Y-m-d H:i:s');
         $CommentRecord->updated_at = null;
         $CommentRecord->save();
-        $this->redirect('/blog/' . $id);
+
+        $url = $this->app->getUrl('blog');
+        $this->app->redirect($url . "/$id");
     }
 
     /**
@@ -41,7 +43,9 @@ class CommentController extends BaseController
         $CommentRecord = new CommentRecord($this->app->db());
         $CommentRecord->find($comment_id);
         $CommentRecord->delete();
-        $this->redirect('/blog/' . $id);
+
+        $url = $this->app->getUrl('blog');
+        $this->app->redirect($url . "/$id");
     }
 
 }
