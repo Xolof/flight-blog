@@ -14,7 +14,7 @@ use Tracy\Debugger;
 // $dsn = 'mysql:host=' . $config['database']['host'] . ';dbname=' . $config['database']['dbname'] . ';charset=utf8mb4';
 
 // uncomment the following line for SQLite
-// $dsn = 'sqlite:' . $config['database']['file_path'];
+$dsn = 'sqlite:' . $config['database']['file_path'];
 
 // Uncomment the below lines if you want to add a Flight::db() service
 // In development, you'll want the class that captures the queries for you. In production, not so much.
