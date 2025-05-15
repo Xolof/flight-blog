@@ -20,3 +20,15 @@ $router->group('/api', function() use ($router, $app) {
 	$router->get('/users/@id:[0-9]', [ $Api_Example_Controller, 'getUser' ]);
 	$router->post('/users/@id:[0-9]', [ $Api_Example_Controller, 'updateUser' ]);
 });
+
+// Blog
+$router->group('/blog', function(Router $router) {
+    // Posts
+    $router->get('', \app\controllers\PostController::class . '->index');
+    $router->get('/create', \app\controllers\PostController::class . '->create');
+    $router->post('', \app\controllers\PostController::class . '->store');
+    $router->get('/@id', \app\controllers\PostController::class . '->show');
+    $router->get('/@id/edit', \app\controllers\PostController::class . '->edit');
+    $router->post('/@id/edit', \app\controllers\PostController::class . '->update');
+    $router->get('/@id/delete', \app\controllers\PostController::class . '->destroy');
+});
