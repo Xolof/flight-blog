@@ -28,8 +28,8 @@ $router->group('/blog', function(Router $router) {
     $router->get('/create', \app\controllers\PostController::class . '->create');
     $router->post('', \app\controllers\PostController::class . '->store');
     $router->get('/@id', \app\controllers\PostController::class . '->show');
-    $router->get('/@id/edit', \app\controllers\PostController::class . '->edit');
-    $router->post('/@id/edit', \app\controllers\PostController::class . '->update');
+    $router->get('/@id/edit', \app\controllers\PostController::class . '->edit')->setAlias('blog_edit_method_get');
+    $router->post('/@id/edit', \app\controllers\PostController::class . '->update')->setAlias('blog_edit_method_post');
     $router->get('/@id/delete', \app\controllers\PostController::class . '->destroy');
     // Comments
     $router->post('/@id/comment', \app\controllers\CommentController::class . '->store');

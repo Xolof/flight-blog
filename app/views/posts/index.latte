@@ -15,7 +15,8 @@
     <p>Comments: {count($post->comments)}
     <p>{$post->content|truncate:100}</p>
     <hr>
-    <a class="pseudo button" href="/blog/{$post->id}/edit">Update</a> - <a class="pseudo button" href="/blog/{$post->id}/delete">Delete</a>
+    <a class="pseudo button" href="{route('blog_edit_method_get', [ 'id' => $post->id ])}">Update</a>
+    - <a class="pseudo button" href="/blog/{$post->id}/delete">Delete</a>
 {/foreach}
 
 {/block}
