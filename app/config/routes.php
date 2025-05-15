@@ -31,4 +31,7 @@ $router->group('/blog', function(Router $router) {
     $router->get('/@id/edit', \app\controllers\PostController::class . '->edit');
     $router->post('/@id/edit', \app\controllers\PostController::class . '->update');
     $router->get('/@id/delete', \app\controllers\PostController::class . '->destroy');
+    // Comments
+    $router->post('/@id/comment', \app\controllers\CommentController::class . '->store');
+    $router->get('/@id/comment/@comment_id/delete', \app\controllers\CommentController::class . '->destroy');
 });
